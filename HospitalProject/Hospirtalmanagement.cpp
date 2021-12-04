@@ -355,7 +355,7 @@ void Doctorprocces() {
 		int i = 0;
 
 		for (auto x: DoctorList){
-			cout << "*** Doctor Number : " << i++ << " ***" << endl;
+			cout << "*** Doctor Number : " << ++i << " ***" << endl;
 			x.printDoctorInf();
 		
 		}

@@ -261,7 +261,6 @@ void PatientProcces() {
 		patientList.erase(patientList.begin() + SelectPatientID - 1);
 		cout << " " << SelectPatientID << " is deleted." << endl;
 		}
-		int id;
 
 			
 
@@ -352,26 +351,29 @@ void Doctorprocces() {
 
 		break;
 	}
-	case 2:
-		int SelectDoctorId;
-
-		cout << "Enter Doctor Id " << endl;
-		cin >> SelectDoctorId;
-	
-		for (auto x: DoctorList){
+	case 2:{
 		
-			if (SelectDoctorId == x.DId) {
-				DoctorList.erase(DoctorList.begin() + 0);
-				cout << " " << SelectDoctorId << " is deleted." << endl;
-				
-			}
-			else if(SelectDoctorId =! x.DId){
-				cout << "The doctor with the number you entered could not be found... !!!" << endl;
-			
-			}
+		int i = 0;
+
+		for (auto x: DoctorList){
+			cout << "*** Doctor Number : " << i++ << " ***" << endl;
+			x.printDoctorInf();
 		
 		}
+
+		int SelectDoctorId;
+		cout << "Enter Doctor Number " << endl;
+		cin >> SelectDoctorId;
+
 		
+			if (DoctorList.size() == 0 || SelectDoctorId > DoctorList.size()){
+			cout << "The doctor with the number you entered could not be found... !!!" << endl;
+			}
+			else {
+				DoctorList.erase(DoctorList.begin() + SelectDoctorId-1);
+				cout << " " << SelectDoctorId << " is deleted." << endl;
+			}
+
 		cout << " \nReturn the Doctor Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> docpros;
 		if (docpros == 1) {
@@ -382,6 +384,7 @@ void Doctorprocces() {
 		}
 
 		break;
+	}
 	case 3:
 
 		cout << "- - - Doctor List - - -" << endl;

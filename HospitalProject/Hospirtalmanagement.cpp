@@ -261,6 +261,7 @@ void PatientProcces() {
 		patientList.erase(patientList.begin() + SelectPatientID - 1);
 		cout << " " << SelectPatientID << " is deleted." << endl;
 		}
+		int id;
 
 			
 

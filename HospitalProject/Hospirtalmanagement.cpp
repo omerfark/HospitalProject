@@ -2,26 +2,41 @@
 #include <iostream>
 #include <vector>
 
-
-
 using namespace std;
 
 void WelcomeScreen();
+
 void PatientProcces();
-void Doctorprocces();
-void RoomProcces();
 void Patientobject();
-void Doctorobject();
-void AllRoomNum();
-void printPatientInf();
-void PrintPatientRoom();
-void showPatientDisease();
 void AddPatient();
+void printPatientInf();
+void showPatientDisease();
+void PrintPatientRoom();
+void showpatientGender();
+void patientRoomController();
+
+void Doctorprocces();
+void Doctorobject();
 void AddDoctor();
 void printDoctorInf();
 void PrintDoctorRoom();
+void ShowDoctorGender();
 void ShowDoctorSalary();
+void doctorgendercontroller();
+void doctorRoomController();
 
+void Nurseprocces();
+void Nurseobject();
+void AddNurse();
+void printNurseInf();
+void PrintNurserRoom();
+void ShowNurseSalary();
+void ShowNurseGender();
+void NurseGenderController();
+void NurseRoomController();
+
+void RoomProcces();
+void AllRoomNum();
 
 
 //------------------Patient Class---------------//
@@ -33,8 +48,9 @@ public:
 	int Pid;
 	string PDisease;
 	int PRoomnum;
+	char PGender;
 
-	PatientClass(string Pname, int Page, int Pid, string PDisease, int PRoomnum);
+	PatientClass(string Pname, int Page, int Pid, string PDisease, int PRoomnum, char PGender);
 
 
 	void printPatientInf() {
@@ -44,6 +60,12 @@ public:
 		cout << "Patient Id: " << Pid << endl;
 		cout << "Patient Disease: " << PDisease << endl;
 		cout << "Patient Room Number:  " << PRoomnum << endl;
+		if (PGender == 'M') {
+			cout << "Doctor Gender: Male " << endl;
+		}
+		else {
+			cout << "Doctor Gender: Female " << endl;
+		}
 		cout << "- - - - - - - - - - - " << endl;
 
 	}
@@ -56,19 +78,32 @@ public:
 	void showPatientDisease() {
 		cout << "Patient Name:  " << Pname << " - Patieent Disease: " << PDisease << endl;
 	}
+	void showpatientGender() {
+		if (PGender == 'M') {
+			cout << "Patient " << Pname << " gender is Male " << endl;
+		}
+		else {
+
+			cout << "Patient " << Pname << " gender is Female" << endl;
+		}
+
+	}
 };
 
 vector<PatientClass> patientList;
 
 
-PatientClass::PatientClass(string Pname, int Page, int Pid, string PDisease, int PRoomnum) {
+PatientClass::PatientClass(string Pname, int Page, int Pid, string PDisease, int PRoomnum, char PGender) {
 	this->Pname = Pname;
 	this->Page = Page;
 	this->Pid = Pid;
 	this->PDisease = PDisease;
 	this->PRoomnum = PRoomnum;
+	this->PGender = PGender;
 	patientList.push_back(*this);
 }
+
+// - - - - - - Add Patient - - - - - - //
 
 void AddPatient() {
 
@@ -78,6 +113,7 @@ void AddPatient() {
 	int Id;
 	string Disease;
 	int roomnum;
+	char Gender;
 
 	cout << "Name: ";
 	cin >> Name;
@@ -89,11 +125,95 @@ void AddPatient() {
 	cin >> Disease;
 	cout << "Room number: ";
 	cin >> roomnum;
+	cout << "Gender (Male[M] - Female[F]): ";
+	cin >> Gender;
 
-	PatientClass newPatient2(Name, Age, Id, Disease, roomnum);
+	PatientClass newPatient2(Name, Age, Id, Disease, roomnum, Gender);
 
+	patientRoomController();
 }
 
+// - - - - - - Patient room Controller - - - - - - //
+
+void patientRoomController() {
+	int room1 = 0, room2 = 0, room3 = 0, room4 = 0, room5 = 0, room6 = 0;
+	for (auto x : patientList) {
+		if (x.PRoomnum == 1) {
+			room1++;
+		}
+		else if (x.PRoomnum == 2) {
+			room2++;
+		}
+		else if (x.PRoomnum == 3) {
+			room3++;
+		}
+		else if (x.PRoomnum == 4) {
+			room4++;
+		}
+		else if (x.PRoomnum == 5) {
+			room5++;
+		}
+		else if (x.PRoomnum == 6) {
+			room6++;
+		}
+	}
+
+	if (room1 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		patientList.erase(patientList.end() - 1);
+		AddPatient();
+	}
+	else if (room2 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		patientList.erase(patientList.end() - 1);
+		AddPatient();
+	}
+	else if (room3 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		patientList.erase(patientList.end() - 1);
+		AddPatient();
+	}
+	else if (room4 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		patientList.erase(patientList.end() - 1);
+		AddPatient();
+	}
+	else if (room5 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		patientList.erase(patientList.end() - 1);
+		AddPatient();
+	}
+	else if (room6 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		patientList.erase(patientList.end() - 1);
+		AddPatient();
+
+	}
+	else {
+		PatientProcces();
+	}
+
+
+
+}
 
 //------------------Doctor Class---------------//
 
@@ -104,8 +224,9 @@ public:
 	int DId;
 	double DSalary;
 	int  DRoomnum;
+	char DGender;
 
-	DoctorClass(string DName, int DAge, int DId, double DSalary, int DRoomnum);
+	DoctorClass(string DName, int DAge, int DId, double DSalary, int DRoomnum, char Dgender);
 
 
 	void printDoctorInf() {
@@ -114,36 +235,58 @@ public:
 		cout << "Doctor Age: " << DAge << endl;
 		cout << "Doctor Id: " << DId << endl;
 		cout << "Doctor Salary: " << DSalary << endl;
-		cout << "Doctor Room Number:  " << DRoomnum << endl;
+		cout << " Doctor Room Number : " << DRoomnum << endl;
+		if (DGender == 'M') {
+			cout << "Doctor Gender: Male " << endl;
+		}
+		else {
+			cout << "Doctor Gender: Female " << endl;
+		}
 		cout << "- - - - - - - - - - - " << endl;
 
 	}
 
-	void PrintDoctorRoom(){
+	void PrintDoctorRoom() {
 		cout << "Doctor Name : " << DName;
-		cout << " -- Doctor Room Number is : " << DRoomnum <<  endl;
+		cout << " -- Doctor Room Number is : " << DRoomnum << endl;
+
+
 	}
 
 	void AllRoomNum() {
 		cout << "Avaliable Room Number:   " << DRoomnum << endl;
 	}
-	
+
 	void ShowDoctorSalary() {
 		cout << "Doctor " << DName << " salary is " << DSalary << endl;
+	}
+
+	void ShowDoctorGender() {
+		if (DGender == 'M') {
+			cout << "Doctor " << DName << " gender is Male " << endl;
+		}
+		else {
+
+			cout << "Doctor " << DName << " gender is Female" << endl;
+		}
+
 	}
 };
 
 vector<DoctorClass> DoctorList;
 
-DoctorClass::DoctorClass(string DName, int DAge, int DId, double DSalary, int DRoomnum) {
+DoctorClass::DoctorClass(string DName, int DAge, int DId, double DSalary, int DRoomnum, char DGender) {
 	this->DName = DName;
 	this->DAge = DAge;
 	this->DId = DId;
 	this->DSalary = DSalary;
 	this->DRoomnum = DRoomnum;
+	this->DGender = DGender;
 	DoctorList.push_back(*this);
 
 }
+
+// - - - - - - Add Doctor - - - - - - //
 
 void AddDoctor() {
 
@@ -152,6 +295,7 @@ void AddDoctor() {
 	int DocId;
 	double DocSalary;
 	int Docroomnum;
+	char DocGender;
 
 	cout << "Name: ";
 	cin >> DocName;
@@ -163,23 +307,343 @@ void AddDoctor() {
 	cin >> DocSalary;
 	cout << "Room number: ";
 	cin >> Docroomnum;
+	cout << "Gender (Male[M] - Female[F]): ";
+	cin >> DocGender;
 
-	DoctorClass newDoctor(DocName, DocAge, DocId, DocSalary, Docroomnum);
 
-	
+	// - - - - - Age of doctor cotroller - - - - // 
+	if (DocAge < 24) {
+		cout << "Doctor age is not enough !!!" << endl;
+		cout << "Please re-enter the information " << endl;
+		AddDoctor();
+	}
+	else {
+		DoctorClass newDoctor(DocName, DocAge, DocId, DocSalary, Docroomnum, DocGender);
+	}
+	doctorgendercontroller();
+}
+
+// - - - - - - Doctor Room Controller  - - - - - //
+
+void doctorRoomController() {
+	int room1 = 0;
+	int room2 = 0;
+	int room3 = 0;
+	for (auto x : DoctorList) {
+		if (x.DRoomnum == 1 || x.DRoomnum == 2) {
+			room1++;
+		}
+		else if (x.DRoomnum == 3 || x.DRoomnum == 4) {
+			room2++;
+		}
+		else if (x.DRoomnum == 5 || x.DRoomnum == 6) {
+			room3++;
+		}
+	}
+
+	room1--;
+	room2--;
+	room3--;
+
+	if (room1 >= 2) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Rooms are already full." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		DoctorList.erase(DoctorList.end() - 1);  //Eðer odalar doluysa kod bu koþulu saðlayarak son girilen bilgileri siler.
+		AddDoctor();
+	}
+	else if (room2 >= 2) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Rooms are already full." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		DoctorList.erase(DoctorList.end() - 1); //Eðer odalar doluysa kod bu koþulu saðlayarak son girilen bilgileri siler.
+		AddDoctor();
+	}
+	else if (room2 >= 2) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Rooms are already full." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		DoctorList.erase(DoctorList.end() - 1); //Eðer odalar doluysa kod bu koþulu saðlayarak son girilen bilgileri siler.
+		AddDoctor();
+	}
+	else {
+		Doctorprocces();
+	}
+}
+
+// - - - - - Gender of doctor control - - - - //
+
+void doctorgendercontroller() {
+	int male = 0;
+	int female = 0;
+	for (auto x : DoctorList) {
+		if (x.DGender == 'M') {
+			male++;
+		}
+		else {
+			female++;
+		}
+	}
+	female--;
+	male--;
+
+	if (male >= 2) {
+		cout << "Male doctor quota has been reached." << endl;
+		DoctorList.erase(DoctorList.end() - 1);  //Eklenen doktorun cinsiyetini kabul etmediði için son girilen bilgileri siliyor.
+		Doctorprocces();
+	}
+	else if (female >= 2) {
+		cout << "Female doctor quota has been reached." << endl;
+		DoctorList.erase(DoctorList.end() - 1);   //Eklenen doktorun cinsiyetini kabul etmediði için son girilen bilgileri siliyor.
+		Doctorprocces();
+	}
+	else {
+		Doctorprocces();
+	}
+
+
+}
+
+void DoctorNurseController() {
+	for (auto x : DoctorList) {
+
+	}
+
+}
+
+// ----------------Nurse Class---------------//
+
+class NurseClass {
+public:
+	string NName;
+	int NAge;
+	int NId;
+	int NSalary;
+	int NRoomnum;
+	char NGender;
+
+	NurseClass(string NName, int NAge, int NId, int NSlaray, int NRoomnum, char NGender);
+
+	void printNurseInf() {
+		cout << "- - - - - - - - - - - " << endl;
+		cout << "Nurse Name: " << NName << endl;
+		cout << "Nurse Age: " << NAge << endl;
+		cout << "Nurse Id: " << NId << endl;
+		cout << "Nurse Salary: " << NSalary << endl;
+		cout << "Nurse Room Number:  " << NRoomnum << endl;
+		cout << "Nurse Gender: " << NGender << endl;
+		if (NGender == 'M') {
+			cout << "Nurse Gender: Male " << endl;
+		}
+		else {
+			cout << "Nurse Gender: Female " << endl;
+		}
+		cout << "- - - - - - - - - - - " << endl;
+	}
+
+	void PrintNurserRoom() {
+		cout << "Nurse Name : " << NName;
+		cout << " -- Nurse Room Number is : " << NRoomnum << endl;
+	}
+
+	void AllRoomNum() {
+		cout << "Avaliable Room Number:   " << NRoomnum << endl;
+	}
+
+	void ShowNurseSalary() {
+		cout << "Nurse " << NName << " salary is " << NSalary << endl;
+	}
+
+	void ShowNurseGender() {
+		if (NGender == 'M') {
+			cout << "Nurse " << NName << " gender is Male " << endl;
+		}
+		else {
+
+			cout << "Nurse " << NName << " gender is Female" << endl;
+		}
+	}
+
+};
+
+vector<NurseClass> NurseList;
+
+NurseClass::NurseClass(string NName, int NAge, int NId, int NSalary, int NRoomnum, char NGender) {
+	this->NName = NName;
+	this->NAge = NAge;
+	this->NId = NId;
+	this->NSalary = NSalary;
+	this->NRoomnum = NRoomnum;
+	this->NGender = NGender;
+	NurseList.push_back(*this);
+}
+
+// - - - - - - Add Nurse - - - - - - //
+
+void AddNurse() {
+	string NurName;
+	int NurAge;
+	int NurId;
+	int NurSalary;
+	int Nurroomnum;
+	char NurGender;
+
+	cout << "Name: ";
+	cin >> NurName;
+	cout << "Age:  ";
+	cin >> NurAge;
+	cout << "Id: ";
+	cin >> NurId;
+	cout << "Salary: ";
+	cin >> NurSalary;
+	cout << "Room number: ";
+	cin >> Nurroomnum;
+	cout << "Gender (Male[M] - Female[F]): ";
+	cin >> NurGender;
+
+	// - - - - - Age of Nurse cotroller - - - - // 
+	if (NurAge < 18) {
+		cout << "Nurse age is not enough !!!" << endl;
+		cout << "Please re-enter the information " << endl;
+		AddDoctor();
+	}
+	else {
+		NurseClass newNurse(NurName, NurAge, NurId, NurSalary, Nurroomnum, NurGender);
+	}
+
+	NurseRoomController();
+
+	NurseGenderController();
+
+}
+
+// - - - - - - Nurse Room Controller - - - - //
+
+void NurseRoomController() {
+	int room1 = 0, room2 = 0, room3 = 0, room4 = 0, room5 = 0, room6 = 0;
+	for (auto x : NurseList) {
+		if (x.NRoomnum == 1) {
+			room1++;
+		}
+		else if (x.NRoomnum == 2) {
+			room2++;
+		}
+		else if (x.NRoomnum == 3) {
+			room3++;
+		}
+		else if (x.NRoomnum == 4) {
+			room4++;
+		}
+		else if (x.NRoomnum == 5) {
+			room5++;
+		}
+		else if (x.NRoomnum == 6) {
+			room6++;
+		}
+	}
+
+	if (room1 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		NurseList.erase(NurseList.end() - 1);
+		AddNurse();
+	}
+	else if (room2 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		NurseList.erase(NurseList.end() - 1);
+		AddNurse();
+	}
+	else if (room3 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		NurseList.erase(NurseList.end() - 1);
+		AddNurse();
+	}
+	else if (room4 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		NurseList.erase(NurseList.end() - 1);
+		AddNurse();
+	}
+	else if (room5 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		NurseList.erase(NurseList.end() - 1);
+		AddNurse();
+	}
+	else if (room6 > 1) {
+		cout << "- - - - - - - - - - - - " << endl;
+		cout << "Room is not empty !!!" << endl;
+		cout << "Please try another rooms number." << endl;
+		cout << "- - - - - - - - - - - - " << endl;
+		NurseList.erase(NurseList.end() - 1);
+		AddNurse();
+
+	}
+	else {
+		Nurseprocces();
+	}
+
+}
+
+// - - - - - Gender of Nurse control - - - - //
+
+void NurseGenderController() {
+	int male = 0;
+	int female = 0;
+	for (auto x : NurseList) {
+		if (x.NGender == 'M') {
+			male++;
+		}
+		else {
+			female++;
+		}
+	}
+	female--;
+	male--;
+
+	if (male >= 4) {
+		cout << "Male nurse quota has been reached." << endl;
+		NurseList.erase(NurseList.end() - 1);  //Eklenen Hemþirenin cinsiyetini kabul etmediði için son girilen bilgileri siliyor.
+		Nurseprocces();
+	}
+	else if (female >= 4) {
+		cout << "Female nurse quota has been reached." << endl;
+		NurseList.erase(NurseList.end() - 1);   //Eklenen Hemþirenin cinsiyetini kabul etmediði için son girilen bilgileri siliyor.
+		Doctorprocces();
+	}
+	else {
+		Nurseprocces();
+	}
 }
 
 int main() {
-	
-	DoctorClass doctor1("Ferhat", 29, 123, 20500, 1);
-	DoctorClass doctor2("Ayse", 32, 456, 25500, 2);
-	PatientClass patient1("ahmet", 45, 111, "Heart", 1);
-	PatientClass patient2("omer", 54, 112, "respiratory", 2);
+
+	DoctorClass doctor1("Ferhat", 29, 1020, 20500,1, 'M');
+	DoctorClass doctor2("Ayse", 32, 1021, 25500, 1, 'F');
+
+	NurseClass nurse1("Emir", 26, 2020, 12000, 1, 'M');
+	NurseClass nurse2("Nur", 20, 2021, 10000, 2, 'F');
+
+	PatientClass patient1("ahmet", 45, 3020, "Heart", 1, 'M');
+	PatientClass patient2("omer", 54, 3021, "respiratory", 2, 'F');
+
 
 	WelcomeScreen();
-	
+
 	return 0;
-}	
+}
 
 //-------Welcome Screen---------//
 
@@ -188,7 +652,7 @@ void WelcomeScreen() {
 	cout << "       -------------------------     " << endl;
 
 	int SelectProcces;
-	cout << "SELECT: " << endl << "1. Show Patient Procces " << endl << "2. Show Doctor Procces" << endl << "3. Show Room Procces" << endl << "4. Exit" << endl;
+	cout << "SELECT: " << endl << "1. Show Patient Procces " << endl << "2. Show Doctor Procces" << endl << "3. Show Nurse Procces" << endl << "4. Show Room Procces" << endl << "5. Exit" << endl;
 	cin >> SelectProcces;
 
 	switch (SelectProcces) {
@@ -199,9 +663,13 @@ void WelcomeScreen() {
 		Doctorprocces();
 		break;
 	case 3:
-		RoomProcces();
+		Nurseprocces();
 		break;
 	case 4:
+		RoomProcces();
+
+		break;
+	case 5:
 		//system("cls");
 		cout << "The System is Shutting Down." << endl;
 		break;
@@ -214,7 +682,7 @@ void PatientProcces() {
 	system("cls");
 	int patpros;
 	int PatientProccess;
-	cout << "- - - Patient Procces - - -" << endl << "1. Add Patient " << endl << "2. Delete Patient " << endl << "3. List All Patient" << endl << "4. Show Patiant Disease " << endl << "5. Return the Previus Screen" << endl;
+	cout << "- - - Patient Procces - - -" << endl << "1. Add Patient " << endl << "2. Delete Patient " << endl << "3. List All Patient" << endl << "4. Show Patiant Disease " << endl << "5. Show Patient Gender " << endl << "6. Return the Previus Screen" << endl;
 	cin >> PatientProccess;
 
 	switch (PatientProccess)
@@ -222,14 +690,14 @@ void PatientProcces() {
 	case 1:
 	{
 		system("cls");
-		
+
 		cout << "- - - Add Patient - - -" << endl;
 		AddPatient();
 		cout << "Patient is added..." << endl << " - - - - - -" << endl;
 
 		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> patpros;
-		
+
 		if (patpros == 1) {
 			PatientProcces();
 		}
@@ -241,12 +709,12 @@ void PatientProcces() {
 	}
 	case 2:
 	{
-		
+
 		int i = 0;
 		for (auto x : patientList) {
-			cout << "*********" << ++i << " ********" << endl;		 
+			cout << "*********" << ++i << " ********" << endl;
 			x.printPatientInf();
-		
+
 
 		}
 
@@ -256,12 +724,10 @@ void PatientProcces() {
 		if (patientList.size() == 0 || SelectPatientID > patientList.size()) {
 			cout << "The doctor with the number you entered could not be found... !!!" << endl;
 		}
-		else{
-		patientList.erase(patientList.begin() + SelectPatientID - 1);
-		cout << " " << SelectPatientID << " is deleted." << endl;
+		else {
+			patientList.erase(patientList.begin() + SelectPatientID - 1);
+			cout << " " << SelectPatientID << " is deleted." << endl;
 		}
-
-			
 
 		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> patpros;
@@ -277,7 +743,7 @@ void PatientProcces() {
 		break;
 	}
 	case 3:
-		
+
 		cout << "- - - Patient List - - -" << endl;
 		for (auto x : patientList)
 		{
@@ -286,7 +752,7 @@ void PatientProcces() {
 
 		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> patpros;
-		
+
 		if (patpros == 1) {
 			PatientProcces();
 		}
@@ -296,14 +762,14 @@ void PatientProcces() {
 
 		break;
 	case 4:
-		
+
 		for (auto x : patientList) {
 			x.showPatientDisease();
 		}
 
 		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> patpros;
-		
+
 		if (patpros == 1) {
 			PatientProcces();
 		}
@@ -313,7 +779,24 @@ void PatientProcces() {
 
 		break;
 	case 5:
-		
+
+		for (auto x : patientList) {
+			x.showpatientGender();
+		}
+
+		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> patpros;
+
+		if (patpros == 1) {
+			PatientProcces();
+		}
+		else {
+			WelcomeScreen();
+		}
+		break;
+
+	case 6:
+
 		WelcomeScreen();
 
 		break;
@@ -323,10 +806,11 @@ void PatientProcces() {
 // -- - - - - Doctor procces - - -  - //
 
 void Doctorprocces() {
-	system("cls");
+	//system("cls");
+
 	int docpros;
 	int DoctorProcces;
-	cout << "- - - Doctor Proces - - -" << endl << "1. Add New Doctor " << endl << "2. Delete Doctor " << endl << "3. List Doctor list "<< endl << "4. Show All Doctor Salary" << endl << "5. Return the Previus Screen" << endl;
+	cout << "- - - Doctor Proces - - -" << endl << "1. Add New Doctor " << endl << "2. Delete Doctor " << endl << "3. List Doctor list " << endl << "4. Show All Doctor Salary" << endl << "5. Show Doctor Gender" << endl << "6. Return the Previus Screen" << endl;
 	cin >> DoctorProcces;
 
 	switch (DoctorProcces)
@@ -336,8 +820,9 @@ void Doctorprocces() {
 		system("cls");
 		cout << "- - - Add Doctor - - -" << endl;
 		AddDoctor();
+
 		cout << "- - - Doctor is Added...  - - -" << endl;
-		
+
 		cout << " \nReturn the Doctor Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> docpros;
 		if (docpros == 1) {
@@ -346,32 +831,30 @@ void Doctorprocces() {
 		else {
 			WelcomeScreen();
 		}
-		
 
 		break;
 	}
-	case 2:{
-		
+	case 2: {
+
 		int i = 0;
 
-		for (auto x: DoctorList){
+		for (auto x : DoctorList) {
 			cout << "*** Doctor Number : " << ++i << " ***" << endl;
 			x.printDoctorInf();
-		
+
 		}
 
 		int SelectDoctorId;
 		cout << "Enter Doctor Number " << endl;
 		cin >> SelectDoctorId;
 
-		
-			if (DoctorList.size() == 0 || SelectDoctorId > DoctorList.size()){
+		if (DoctorList.size() == 0 || SelectDoctorId > DoctorList.size()) {
 			cout << "The doctor with the number you entered could not be found... !!!" << endl;
-			}
-			else {
-				DoctorList.erase(DoctorList.begin() + SelectDoctorId-1);
-				cout << " " << SelectDoctorId << " is deleted." << endl;
-			}
+		}
+		else {
+			DoctorList.erase(DoctorList.begin() + SelectDoctorId - 1);
+			cout << " " << SelectDoctorId << " is deleted." << endl;
+		}
 
 		cout << " \nReturn the Doctor Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> docpros;
@@ -390,12 +873,12 @@ void Doctorprocces() {
 		for (auto x : DoctorList)
 		{
 			x.printDoctorInf();
-			
+
 		}
 
 		cout << " \nReturn the Doctor Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> docpros;
-		
+
 		if (docpros == 1) {
 			Doctorprocces();
 		}
@@ -412,7 +895,7 @@ void Doctorprocces() {
 
 		cout << " \nReturn the Doctor Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> docpros;
-	
+
 		if (docpros == 1) {
 			Doctorprocces();
 		}
@@ -421,6 +904,141 @@ void Doctorprocces() {
 		}
 		break;
 	case 5:
+		for (auto x : DoctorList) {
+			x.ShowDoctorGender();
+		}
+		cout << " \nReturn the Doctor Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> docpros;
+
+		if (docpros == 1) {
+			Doctorprocces();
+		}
+		else {
+			WelcomeScreen();
+		}
+		break;
+	case 6:
+		WelcomeScreen();
+
+		break;
+	}
+}
+
+// - - - - - Nurse procces - - - - //
+
+void Nurseprocces() {
+	//system("cls");
+	int Nurpros;
+	int NurseProcces;
+	cout << "- - - Nurse Proces - - -" << endl << "1. Add New Nurse " << endl << "2. Delete Nurse " << endl << "3. List Nurse list " << endl << "4. Show All Nurse Salary" << endl << "5. Show Nurse Gender " << endl << "6. Return the Previus Screen" << endl;
+	cin >> NurseProcces;
+
+	switch (NurseProcces)
+	{
+	case 1:
+	{
+		system("cls");
+		cout << "- - - Add Nurse - - -" << endl;
+		AddNurse();
+		cout << "- - - Nurse is Added...  - - -" << endl;
+
+		cout << " \nReturn the Nurse Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> Nurpros;
+		if (Nurpros == 1) {
+			Nurseprocces();
+		}
+		else {
+			WelcomeScreen();
+		}
+
+
+		break;
+	}
+	case 2: {
+
+		int i = 0;
+
+		for (auto x : NurseList) {
+			cout << "*** Nurse Number : " << ++i << " ***" << endl;
+			x.printNurseInf();
+
+		}
+
+		int SelectNurseId;
+		cout << "Enter Nurse Number " << endl;
+		cin >> SelectNurseId;
+
+
+		if (NurseList.size() == 0 || SelectNurseId > NurseList.size()) {
+			cout << "The Nurse with the number you entered could not be found... !!!" << endl;
+		}
+		else {
+			NurseList.erase(NurseList.begin() + SelectNurseId - 1);
+			cout << " " << SelectNurseId << " is deleted." << endl;
+		}
+
+		cout << " \nReturn the Nurse Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> Nurpros;
+		if (Nurpros == 1) {
+			Nurseprocces();
+		}
+		else {
+			WelcomeScreen();
+		}
+
+		break;
+	}
+	case 3:
+
+		cout << "- - - Doctor List - - -" << endl;
+		for (auto x : NurseList)
+		{
+			x.printNurseInf();
+
+		}
+
+		cout << " \nReturn the Nurse Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> Nurpros;
+
+		if (Nurpros == 1) {
+			Nurseprocces();
+		}
+		else {
+			WelcomeScreen();
+		}
+
+		break;
+	case 4:
+		for (auto x : NurseList)
+		{
+			x.ShowNurseSalary();
+		}
+
+		cout << " \nReturn the Nurse Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> Nurpros;
+
+		if (Nurpros == 1) {
+			Nurseprocces();
+		}
+		else {
+			WelcomeScreen();
+		}
+		break;
+	case 5:
+		for (auto x : NurseList) {
+			x.ShowNurseGender();
+		}
+		cout << " \nReturn the Nurse Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> Nurpros;
+
+		if (Nurpros == 1) {
+			Nurseprocces();
+		}
+		else {
+			WelcomeScreen();
+		}
+		break;
+	case 6:
 
 		WelcomeScreen();
 
@@ -432,31 +1050,30 @@ void Doctorprocces() {
 
 void RoomProcces() {
 	system("cls");
-
+	int roomPros;
 	int selectRoomProcces;
-	cout << "- - - Room Prooces - - -" << endl << "1. Room Doctor List " << endl << "2. Room Patient list " << endl << "3. Room All Number List" << endl << "4. Return the Previus Screen" << endl;
+	cout << "- - - Room Prooces - - -" << endl << "1. Room Doctor List " << endl << "2. Room Patient list " << endl << "3. Room Nurse List" << endl << "4. Room All Number List" << endl << "5. Return the Previus Screen" << endl;
 	cin >> selectRoomProcces;
 
 	switch (selectRoomProcces)
 	{
 	case 1:
-		int roomPros;
+
 		cout << "- - - Doctor Room List - - -" << endl;
 		for (auto x : DoctorList)
 		{
 			x.PrintDoctorRoom();
 		}
-		
-		cout << " \nReturn the Room Procces Press ( 1 ) "<< endl <<  "Return the Main Screen Press Any Key " << endl;
+
+		cout << " \nReturn the Room Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> roomPros;
-		
+
 		if (roomPros == 1) {
 			RoomProcces();
 		}
 		else {
 			WelcomeScreen();
 		}
-		
 
 		break;
 	case 2:
@@ -467,10 +1084,10 @@ void RoomProcces() {
 		{
 			x.PrintPatientRoom();
 		}
-		
+
 		cout << " \nReturn the Room Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
 		cin >> roomPros1;
-		
+
 		if (roomPros1 == 1) {
 			RoomProcces();
 		}
@@ -480,6 +1097,23 @@ void RoomProcces() {
 
 		break;
 	case 3:
+		for (auto x : NurseList) {
+			x.PrintNurserRoom();
+		}
+
+		cout << " \nReturn the Room Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> roomPros1;
+
+		if (roomPros1 == 1) {
+			RoomProcces();
+		}
+		else {
+			WelcomeScreen();
+		}
+
+		break;
+
+	case 4:
 		for (auto x : DoctorList)
 		{
 			x.AllRoomNum();
@@ -495,7 +1129,7 @@ void RoomProcces() {
 		}
 
 		break;
-	case 4:
+	case 5:
 		WelcomeScreen();
 		break;
 	}

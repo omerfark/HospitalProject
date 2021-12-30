@@ -14,6 +14,7 @@ void showPatientDisease();
 void PrintPatientRoom();
 void showpatientGender();
 void patientRoomController();
+void patientIdController(int x);
 
 void Doctorprocces();
 void Doctorobject();
@@ -24,6 +25,7 @@ void ShowDoctorGender();
 void ShowDoctorSalary();
 void doctorgendercontroller();
 void doctorRoomController();
+void DoctorIdController(int x);
 
 void Nurseprocces();
 void Nurseobject();
@@ -34,10 +36,12 @@ void ShowNurseSalary();
 void ShowNurseGender();
 void NurseGenderController();
 void NurseRoomController();
+void NurseIdController(int x);
 
 void RoomProcces();
 void AllRoomNum();
 
+//32
 
 //------------------Patient Class---------------//
 
@@ -107,7 +111,6 @@ PatientClass::PatientClass(string Pname, int Page, int Pid, string PDisease, int
 
 void AddPatient() {
 
-
 	string Name;
 	int Age;
 	int Id;
@@ -119,7 +122,10 @@ void AddPatient() {
 	cin >> Name;
 	cout << "Age:  ";
 	cin >> Age;
-	cout << "Id: ";
+	cout << endl << "For Doctor [ 1 0 _ _ ]" << endl;
+	cout << "For Nurse [ 2 0 _ _ ]" << endl;
+	cout << "For Patient [ 3 0 _ _ ]" << endl;
+	cout << endl << "Id: ";
 	cin >> Id;
 	cout << "Disease: ";
 	cin >> Disease;
@@ -130,7 +136,56 @@ void AddPatient() {
 
 	PatientClass newPatient2(Name, Age, Id, Disease, roomnum, Gender);
 
+	patientIdController(Id);
+	
 	patientRoomController();
+}
+
+// - - - - - -  - - - - Patient Id contoller  - - - - -//
+
+void patientIdController(int x)
+{
+	if (x >= 1000)
+		patientIdController(x / 1000);
+
+	int digit = x % 100;
+
+	//cout << digit << " - ";
+
+	while (digit < 4) {
+
+		if (digit == 3) {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "Patient Id is valid. " << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			PatientProcces();
+			break;
+		}
+		else if (digit == 2) {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "This Id is Nurse ID. Please re-entered patient Id: " << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			patientList.erase(patientList.end() - 1);
+			AddPatient();
+			break;
+		}
+		else if (digit == 1) {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "This Id is Doctor ID. Please re-entered patient Id:" << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			patientList.erase(patientList.end() - 1);
+			AddPatient();
+			break;
+		}
+		else {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "The id number you entered does not valid !!!" << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			patientList.erase(patientList.end() - 1);
+			break;
+		}
+
+	}
 }
 
 // - - - - - - Patient room Controller - - - - - - //
@@ -301,7 +356,10 @@ void AddDoctor() {
 	cin >> DocName;
 	cout << "Age:  ";
 	cin >> DocAge;
-	cout << "Id: ";
+	cout << endl << "For Doctor [ 1 0 _ _ ]" << endl;
+	cout << "For Nurse [ 2 0 _ _ ]" << endl;
+	cout << "For Patient [ 3 0 _ _ ]" << endl;
+	cout << endl << "Id: ";
 	cin >> DocId;
 	cout << "Salary: ";
 	cin >> DocSalary;
@@ -320,7 +378,55 @@ void AddDoctor() {
 	else {
 		DoctorClass newDoctor(DocName, DocAge, DocId, DocSalary, Docroomnum, DocGender);
 	}
+
+	DoctorIdController(DocId);
+
 	doctorgendercontroller();
+	
+}
+
+//- - - - - - -  Doctor Id controller - - - - //
+
+void DoctorIdController(int x) {
+	if (x >= 1000)
+		DoctorIdController(x / 1000);
+
+	int digit = x % 100;
+
+	while (digit < 4) {
+
+		if (digit == 3) {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "This Id is Patient ID. Please re-entered patient Id: " << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			DoctorList.erase(DoctorList.end() - 1);
+			AddDoctor();
+			break;
+		}
+		else if (digit == 2) {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "This Id is Nurse ID. Please re-entered patient Id: " << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			DoctorList.erase(DoctorList.end() - 1);
+			AddDoctor();
+			break;
+		}
+		else if (digit == 1) {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "Doctor Id is valid. " << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;			
+			Doctorprocces();		
+			break;
+		}
+		else {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "The id number you entered does not valid !!!" << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			DoctorList.erase(DoctorList.end() - 1);
+			break;
+		}
+
+	}
 }
 
 // - - - - - - Doctor Room Controller  - - - - - //
@@ -401,13 +507,6 @@ void doctorgendercontroller() {
 		Doctorprocces();
 	}
 
-
-}
-
-void DoctorNurseController() {
-	for (auto x : DoctorList) {
-
-	}
 
 }
 
@@ -492,7 +591,10 @@ void AddNurse() {
 	cin >> NurName;
 	cout << "Age:  ";
 	cin >> NurAge;
-	cout << "Id: ";
+	cout << endl << "For Doctor [ 1 0 _ _ ]" << endl;
+	cout << "For Nurse [ 2 0 _ _ ]" << endl;
+	cout << "For Patient [ 3 0 _ _ ]" << endl;
+	cout << endl << "Id: ";
 	cin >> NurId;
 	cout << "Salary: ";
 	cin >> NurSalary;
@@ -510,11 +612,52 @@ void AddNurse() {
 	else {
 		NurseClass newNurse(NurName, NurAge, NurId, NurSalary, Nurroomnum, NurGender);
 	}
-
+	NurseIdController(NurId);
 	NurseRoomController();
-
 	NurseGenderController();
 
+}
+
+void NurseIdController(int x) {
+	if (x >= 1000)
+		NurseIdController(x / 1000);
+
+	int digit = x % 100;
+
+	while (digit < 4) {
+
+		if (digit == 3) {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "This Id is Patient ID. Please re-entered patient Id: " << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			NurseList.erase(NurseList.end() - 1);
+			AddNurse();
+			break;
+		}
+		else if (digit == 2) {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "Nurse Id is valid.  " << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			Nurseprocces();
+			break;
+		}
+		else if (digit == 1) {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "This Id is Doctor ID. Please re-entered patient Id:" << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			NurseList.erase(NurseList.end() - 1);
+			AddNurse();
+			break;
+		}
+		else {
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			cout << "The id number you entered does not valid !!!" << endl;
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			NurseList.erase(NurseList.end() - 1);
+			break;
+		}
+
+	}
 }
 
 // - - - - - - Nurse Room Controller - - - - //
@@ -630,7 +773,7 @@ void NurseGenderController() {
 
 int main() {
 
-	DoctorClass doctor1("Ferhat", 29, 1020, 20500,1, 'M');
+	DoctorClass doctor1("Ferhat", 29, 1020, 20500, 1, 'M');
 	DoctorClass doctor2("Ayse", 32, 1021, 25500, 1, 'F');
 
 	NurseClass nurse1("Emir", 26, 2020, 12000, 1, 'M');
@@ -673,13 +816,18 @@ void WelcomeScreen() {
 		//system("cls");
 		cout << "The System is Shutting Down." << endl;
 		break;
+	default:
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "Please entered valid number." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		WelcomeScreen();
 	}
 }
 
 // -- - - - - Patient procces - - -  - //
 
 void PatientProcces() {
-	system("cls");
+	//system("cls");
 	int patpros;
 	int PatientProccess;
 	cout << "- - - Patient Procces - - -" << endl << "1. Add Patient " << endl << "2. Delete Patient " << endl << "3. List All Patient" << endl << "4. Show Patiant Disease " << endl << "5. Show Patient Gender " << endl << "6. Return the Previus Screen" << endl;
@@ -800,6 +948,11 @@ void PatientProcces() {
 		WelcomeScreen();
 
 		break;
+	default:
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "Please entered valid number." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		WelcomeScreen();
 	}
 }
 
@@ -921,6 +1074,11 @@ void Doctorprocces() {
 		WelcomeScreen();
 
 		break;
+	default:
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "Please entered valid number." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		WelcomeScreen();
 	}
 }
 
@@ -1043,6 +1201,11 @@ void Nurseprocces() {
 		WelcomeScreen();
 
 		break;
+	default:
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "Please entered valid number." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		WelcomeScreen();
 	}
 }
 
@@ -1132,5 +1295,10 @@ void RoomProcces() {
 	case 5:
 		WelcomeScreen();
 		break;
+	default:
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "Please entered valid number." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		WelcomeScreen();
 	}
 }

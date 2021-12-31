@@ -4,10 +4,13 @@
 
 using namespace std;
 
-void WelcomeScreen();
+void WelcomeScreen_forAdmin();
+void Adminmanagement_panel();
+void WelcomeScreen_forpatient();
+void welcomescreen_General();
 
-void PatientProcces();
-void Patientobject();
+void PatientProcces_forPatient();
+void PatientProcces_forAdmin();
 void AddPatient();
 void printPatientInf();
 void showPatientDisease();
@@ -15,9 +18,9 @@ void PrintPatientRoom();
 void showpatientGender();
 void patientRoomController();
 void patientIdController(int x);
+void showpatientprecedence();
 
 void Doctorprocces();
-void Doctorobject();
 void AddDoctor();
 void printDoctorInf();
 void PrintDoctorRoom();
@@ -28,7 +31,6 @@ void doctorRoomController();
 void DoctorIdController(int x);
 
 void Nurseprocces();
-void Nurseobject();
 void AddNurse();
 void printNurseInf();
 void PrintNurserRoom();
@@ -39,7 +41,6 @@ void NurseRoomController();
 void NurseIdController(int x);
 
 void RoomProcces();
-void AllRoomNum();
 
 //32
 
@@ -53,8 +54,9 @@ public:
 	string PDisease;
 	int PRoomnum;
 	char PGender;
+	int Pprecedence;
 
-	PatientClass(string Pname, int Page, int Pid, string PDisease, int PRoomnum, char PGender);
+	PatientClass(string Pname, int Page, int Pid, string PDisease, int PRoomnum, char PGender, int Pprecedence);
 
 
 	void printPatientInf() {
@@ -70,8 +72,20 @@ public:
 		else {
 			cout << "Doctor Gender: Female " << endl;
 		}
+		
+		if (Pprecedence == 1) {
+			cout << "Patient Precedence : " << "[1 - Green]" << endl;
+		}
+		else if (Pprecedence == 2) {
+			cout << "Patient Precedence : " << "[2 - Yellow]" << endl;
+		}
+		else if (Pprecedence == 3) {
+			cout << "Patient Precedence : " << "[3 - Red]" << endl;
+		}
+		else {
+			cout << "Invalid Precedence !!! " << endl;
+		}	   
 		cout << "- - - - - - - - - - - " << endl;
-
 	}
 
 	void PrintPatientRoom() {
@@ -90,20 +104,35 @@ public:
 
 			cout << "Patient " << Pname << " gender is Female" << endl;
 		}
+	}
 
+	void showpatientprecedence(){
+		if (Pprecedence == 1) {
+			cout << "Patient "<< Pname <<  " - Precedence : [1 - Green] " << endl;
+		}
+		else if (Pprecedence == 2) {
+			cout << "Patient " << Pname << " - Precedence : [2 - Yellow] " << endl;
+		}
+		else if (Pprecedence == 3) {
+			cout << "Patient " << Pname << " - Precedence : [3 - Red] " << endl;
+		}
+		else {
+			cout << "Invalid Precedence !!! " << endl;
+		}
 	}
 };
 
 vector<PatientClass> patientList;
 
 
-PatientClass::PatientClass(string Pname, int Page, int Pid, string PDisease, int PRoomnum, char PGender) {
+PatientClass::PatientClass(string Pname, int Page, int Pid, string PDisease, int PRoomnum, char PGender , int Pprecedence) {
 	this->Pname = Pname;
 	this->Page = Page;
 	this->Pid = Pid;
 	this->PDisease = PDisease;
 	this->PRoomnum = PRoomnum;
 	this->PGender = PGender;
+	this->Pprecedence = Pprecedence;
 	patientList.push_back(*this);
 }
 
@@ -117,6 +146,7 @@ void AddPatient() {
 	string Disease;
 	int roomnum;
 	char Gender;
+	int precedence;
 
 	cout << "Name: ";
 	cin >> Name;
@@ -133,11 +163,12 @@ void AddPatient() {
 	cin >> roomnum;
 	cout << "Gender (Male[M] - Female[F]): ";
 	cin >> Gender;
-
-	PatientClass newPatient2(Name, Age, Id, Disease, roomnum, Gender);
+	cout << "Precedence " << endl << "[1 - Green]" << endl << "[2 - Yellow]" << endl << "[3 - Red]" << endl;
+	cin >> precedence;
+	PatientClass newPatient2(Name, Age, Id, Disease, roomnum, Gender, precedence);
 
 	patientIdController(Id);
-	
+
 	patientRoomController();
 }
 
@@ -158,7 +189,7 @@ void patientIdController(int x)
 			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
 			cout << "Patient Id is valid. " << endl;
 			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
-			PatientProcces();
+			PatientProcces_forAdmin();
 			break;
 		}
 		else if (digit == 2) {
@@ -263,7 +294,7 @@ void patientRoomController() {
 
 	}
 	else {
-		PatientProcces();
+		PatientProcces_forAdmin();
 	}
 
 
@@ -382,7 +413,7 @@ void AddDoctor() {
 	DoctorIdController(DocId);
 
 	doctorgendercontroller();
-	
+
 }
 
 //- - - - - - -  Doctor Id controller - - - - //
@@ -414,8 +445,8 @@ void DoctorIdController(int x) {
 		else if (digit == 1) {
 			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
 			cout << "Doctor Id is valid. " << endl;
-			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;			
-			Doctorprocces();		
+			cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+			Doctorprocces();
 			break;
 		}
 		else {
@@ -779,28 +810,130 @@ int main() {
 	NurseClass nurse1("Emir", 26, 2020, 12000, 1, 'M');
 	NurseClass nurse2("Nur", 20, 2021, 10000, 2, 'F');
 
-	PatientClass patient1("ahmet", 45, 3020, "Heart", 1, 'M');
-	PatientClass patient2("omer", 54, 3021, "respiratory", 2, 'F');
+	PatientClass patient1("ahmet", 45, 3020, "Heart", 1, 'M',2);
+	PatientClass patient2("omer", 54, 3021, "respiratory", 2, 'F',1);
 
-
-	WelcomeScreen();
+	welcomescreen_General();
 
 	return 0;
 }
 
-//-------Welcome Screen---------//
+// - - - - - - Welcome screen General - - - - - -// 
 
-void WelcomeScreen() {
-	cout << "*****   Hospital Manager Sistem   ******" << endl;
-	cout << "       -------------------------     " << endl;
+void welcomescreen_General() {
+	int procces1;
+	cout << "    - - - - - - - - - - - - - - - - - -   " << endl;
+	cout << "	Welcome the Hospital Sistem	" << endl;
+	cout << endl << " SELECT: " << endl << "1. Admin login System " << endl << "2. Patient Record system" << endl;
+	cin >> procces1;
+	switch (procces1)
+	{
+	case 1:
+		Adminmanagement_panel();
+		break;
+	case 2:
+		WelcomeScreen_forpatient();
+		break;
+	default:
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "Please entered valid number." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		welcomescreen_General();
+		break;
+	}
+}
 
+
+// - - -  - - - - - - Welcome Screen for patient - - - - - -//
+
+void WelcomeScreen_forpatient() {
+	system("cls");
+	int Selectedproc;
+	cout << "SELECT: " << endl << "1. Show Patient Procces " << endl << "2. Show Patient Room Procces" << endl << "3. Exit" << endl;
+	cin >> Selectedproc;
+	switch (Selectedproc)
+	{
+	case 1:
+		PatientProcces_forPatient();
+		break;
+	case 2:
+		system("cls");
+		int roomPros1;
+		cout << "- - - Patient Room List - - -" << endl;
+
+		for (auto x : patientList)
+		{
+			x.PrintPatientRoom();
+		}
+
+		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> roomPros1;
+
+		if (roomPros1 == 1) {
+			WelcomeScreen_forpatient();
+		}
+		else {
+			welcomescreen_General();
+		}
+		break;
+	case 3:
+		system("cls");
+		cout << "The System is Shutting Down." << endl;
+		break;
+	default:
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "Please entered valid number." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		WelcomeScreen_forpatient();
+		break;
+	}
+}
+
+// - - -  - - - - - - Admin password control panel - - - - - -//
+
+void Adminmanagement_panel() {
+	int adminpassword = 12345;
+	int enterpassword;
+
+	cout << "Please admin password: ";
+	cin >> enterpassword;
+
+	if (adminpassword == enterpassword) {
+		cout << "    - - - - - - - - - - - - - - - - - -   " << endl;
+		cout << "    Welcome the Hospital Manager Sistem    " << endl;
+		WelcomeScreen_forAdmin();
+	}
+	else {
+
+		cout << "Password is FALSE !!!" << endl;
+		cout << "Exiting the system." << endl;
+		cout << "    - - - - - - - - - - - - - - - - - -   " << endl;
+		int screenpros = 0;
+		cout << "Press 1 to try again. " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> screenpros;
+		cout << "    - - - - - - - - - - - - - - - - - -   " << endl;
+
+		if (screenpros == 1) {
+			Adminmanagement_panel();
+		}
+		else {
+			welcomescreen_General();
+		}
+	}
+
+
+}
+
+//-------Welcome Screen for Admin---------//
+
+void WelcomeScreen_forAdmin() {
 	int SelectProcces;
 	cout << "SELECT: " << endl << "1. Show Patient Procces " << endl << "2. Show Doctor Procces" << endl << "3. Show Nurse Procces" << endl << "4. Show Room Procces" << endl << "5. Exit" << endl;
 	cin >> SelectProcces;
 
 	switch (SelectProcces) {
 	case 1:
-		PatientProcces();
+		PatientProcces_forAdmin();
 		break;
 	case 2:
 		Doctorprocces();
@@ -813,24 +946,24 @@ void WelcomeScreen() {
 
 		break;
 	case 5:
-		//system("cls");
+		system("cls");
 		cout << "The System is Shutting Down." << endl;
 		break;
 	default:
 		cout << " - - - - - - - - - - - - - - - " << endl;
 		cout << "Please entered valid number." << endl;
 		cout << " - - - - - - - - - - - - - - - " << endl;
-		WelcomeScreen();
+		WelcomeScreen_forAdmin();
 	}
 }
 
-// -- - - - - Patient procces - - -  - //
+// -- - - - -[ ADMÝN ] Patient procces - - -  - //
 
-void PatientProcces() {
+void PatientProcces_forAdmin() {
 	//system("cls");
 	int patpros;
 	int PatientProccess;
-	cout << "- - - Patient Procces - - -" << endl << "1. Add Patient " << endl << "2. Delete Patient " << endl << "3. List All Patient" << endl << "4. Show Patiant Disease " << endl << "5. Show Patient Gender " << endl << "6. Return the Previus Screen" << endl;
+	cout << "- - - Patient Procces - - -" << endl << "1. Add Patient " << endl << "2. Delete Patient " << endl << "3. List All Patient" << endl << "4. Show Patiant Disease " << endl <<  "5. Show Patient Gender "  << endl <<"6. Show Patient Precedence"  << endl << "7. Return the Previus Screen" << endl;
 	cin >> PatientProccess;
 
 	switch (PatientProccess)
@@ -847,10 +980,10 @@ void PatientProcces() {
 		cin >> patpros;
 
 		if (patpros == 1) {
-			PatientProcces();
+			PatientProcces_forAdmin();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
@@ -881,10 +1014,10 @@ void PatientProcces() {
 		cin >> patpros;
 
 		if (patpros == 1) {
-			PatientProcces();
+			PatientProcces_forAdmin();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 
@@ -902,10 +1035,10 @@ void PatientProcces() {
 		cin >> patpros;
 
 		if (patpros == 1) {
-			PatientProcces();
+			PatientProcces_forAdmin();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
@@ -919,10 +1052,10 @@ void PatientProcces() {
 		cin >> patpros;
 
 		if (patpros == 1) {
-			PatientProcces();
+			PatientProcces_forAdmin();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
@@ -936,31 +1069,133 @@ void PatientProcces() {
 		cin >> patpros;
 
 		if (patpros == 1) {
-			PatientProcces();
+			PatientProcces_forAdmin();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 		break;
-
 	case 6:
+		for (auto x : patientList) {
+			x.showpatientprecedence();
+		}
+		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> patpros;
 
-		WelcomeScreen();
+		if (patpros == 1) {
+			PatientProcces_forAdmin();
+		}
+		else {
+			WelcomeScreen_forAdmin();
+		}
+		break;
+	case 7:
+
+		WelcomeScreen_forAdmin();
 
 		break;
 	default:
 		cout << " - - - - - - - - - - - - - - - " << endl;
 		cout << "Please entered valid number." << endl;
 		cout << " - - - - - - - - - - - - - - - " << endl;
-		WelcomeScreen();
+		WelcomeScreen_forAdmin();
+	}
+}
+
+// -- - - - -jUST Patient procces - - -  - //
+
+void PatientProcces_forPatient() {
+	int patientproc;
+	int PatientProccess;
+	cout << "- - - Patient Procces - - -" << endl << "1. List All Patient" << endl << "2. Show Patiant Disease " << endl << "3. Show Patient Gender "<< endl << "4. Show Patient Precedence" << endl << "5. Return the Previus Screen" << endl;
+	cin >> PatientProccess;
+
+	switch (PatientProccess)
+	{
+
+	case 1:
+		system("cls");
+		cout << "- - - Patient List - - -" << endl;
+		for (auto x : patientList)
+		{
+			x.printPatientInf();
+		}
+
+		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> patientproc;
+
+		if (patientproc == 1) {
+			PatientProcces_forPatient();
+		}
+		else {
+			WelcomeScreen_forpatient();
+		}
+
+		break;
+	case 2:
+		system("cls");
+		for (auto x : patientList) {
+			x.showPatientDisease();
+		}
+
+		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> patientproc;
+
+		if (patientproc == 1) {
+			PatientProcces_forPatient();
+		}
+		else {
+			WelcomeScreen_forpatient();
+		}
+
+		break;
+	case 3:
+		system("cls");
+		for (auto x : patientList) {
+			x.showpatientGender();
+		}
+
+		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> patientproc;
+
+		if (patientproc == 1) {
+			PatientProcces_forPatient();
+		}
+		else {
+			WelcomeScreen_forpatient();
+		}
+		break;
+
+	case 4:
+		for (auto x : patientList) {
+			x.showpatientprecedence();
+		}
+		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> patientproc;
+
+		if (patientproc == 1) {
+			PatientProcces_forAdmin();
+		}
+		else {
+			WelcomeScreen_forAdmin();
+		}
+		break;
+	case 5:
+
+		WelcomeScreen_forpatient();
+
+		break;
+	default:
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "Please entered valid number." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		WelcomeScreen_forpatient();
 	}
 }
 
 // -- - - - - Doctor procces - - -  - //
 
 void Doctorprocces() {
-	//system("cls");
-
 	int docpros;
 	int DoctorProcces;
 	cout << "- - - Doctor Proces - - -" << endl << "1. Add New Doctor " << endl << "2. Delete Doctor " << endl << "3. List Doctor list " << endl << "4. Show All Doctor Salary" << endl << "5. Show Doctor Gender" << endl << "6. Return the Previus Screen" << endl;
@@ -982,13 +1217,13 @@ void Doctorprocces() {
 			Doctorprocces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
 	}
 	case 2: {
-
+		system("cls");
 		int i = 0;
 
 		for (auto x : DoctorList) {
@@ -1015,13 +1250,13 @@ void Doctorprocces() {
 			Doctorprocces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
 	}
 	case 3:
-
+		system("cls");
 		cout << "- - - Doctor List - - -" << endl;
 		for (auto x : DoctorList)
 		{
@@ -1036,11 +1271,12 @@ void Doctorprocces() {
 			Doctorprocces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
 	case 4:
+		system("cls");
 		for (auto x : DoctorList)
 		{
 			x.ShowDoctorSalary();
@@ -1053,7 +1289,7 @@ void Doctorprocces() {
 			Doctorprocces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 		break;
 	case 5:
@@ -1067,25 +1303,25 @@ void Doctorprocces() {
 			Doctorprocces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 		break;
 	case 6:
-		WelcomeScreen();
+		WelcomeScreen_forAdmin();
 
 		break;
 	default:
+		system("cls");
 		cout << " - - - - - - - - - - - - - - - " << endl;
 		cout << "Please entered valid number." << endl;
 		cout << " - - - - - - - - - - - - - - - " << endl;
-		WelcomeScreen();
+		WelcomeScreen_forAdmin();
 	}
 }
 
 // - - - - - Nurse procces - - - - //
 
 void Nurseprocces() {
-	//system("cls");
 	int Nurpros;
 	int NurseProcces;
 	cout << "- - - Nurse Proces - - -" << endl << "1. Add New Nurse " << endl << "2. Delete Nurse " << endl << "3. List Nurse list " << endl << "4. Show All Nurse Salary" << endl << "5. Show Nurse Gender " << endl << "6. Return the Previus Screen" << endl;
@@ -1106,14 +1342,14 @@ void Nurseprocces() {
 			Nurseprocces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 
 		break;
 	}
 	case 2: {
-
+		system("cls");
 		int i = 0;
 
 		for (auto x : NurseList) {
@@ -1141,13 +1377,13 @@ void Nurseprocces() {
 			Nurseprocces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
 	}
 	case 3:
-
+		system("cls");
 		cout << "- - - Doctor List - - -" << endl;
 		for (auto x : NurseList)
 		{
@@ -1162,11 +1398,12 @@ void Nurseprocces() {
 			Nurseprocces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
 	case 4:
+		system("cls");
 		for (auto x : NurseList)
 		{
 			x.ShowNurseSalary();
@@ -1179,7 +1416,7 @@ void Nurseprocces() {
 			Nurseprocces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 		break;
 	case 5:
@@ -1193,26 +1430,26 @@ void Nurseprocces() {
 			Nurseprocces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 		break;
 	case 6:
 
-		WelcomeScreen();
+		WelcomeScreen_forAdmin();
 
 		break;
 	default:
+		system("cls");
 		cout << " - - - - - - - - - - - - - - - " << endl;
 		cout << "Please entered valid number." << endl;
 		cout << " - - - - - - - - - - - - - - - " << endl;
-		WelcomeScreen();
+		WelcomeScreen_forAdmin();
 	}
 }
 
 // -- - - - - Room procces - - -  - //
 
 void RoomProcces() {
-	system("cls");
 	int roomPros;
 	int selectRoomProcces;
 	cout << "- - - Room Prooces - - -" << endl << "1. Room Doctor List " << endl << "2. Room Patient list " << endl << "3. Room Nurse List" << endl << "4. Room All Number List" << endl << "5. Return the Previus Screen" << endl;
@@ -1221,7 +1458,7 @@ void RoomProcces() {
 	switch (selectRoomProcces)
 	{
 	case 1:
-
+		system("cls");
 		cout << "- - - Doctor Room List - - -" << endl;
 		for (auto x : DoctorList)
 		{
@@ -1235,11 +1472,12 @@ void RoomProcces() {
 			RoomProcces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
 	case 2:
+		system("cls");
 		int roomPros1;
 		cout << "- - - Patient Room List - - -" << endl;
 
@@ -1255,11 +1493,12 @@ void RoomProcces() {
 			RoomProcces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
 	case 3:
+		system("cls");
 		for (auto x : NurseList) {
 			x.PrintNurserRoom();
 		}
@@ -1271,12 +1510,13 @@ void RoomProcces() {
 			RoomProcces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
 
 	case 4:
+		system("cls");
 		for (auto x : DoctorList)
 		{
 			x.AllRoomNum();
@@ -1288,17 +1528,18 @@ void RoomProcces() {
 			RoomProcces();
 		}
 		else {
-			WelcomeScreen();
+			WelcomeScreen_forAdmin();
 		}
 
 		break;
 	case 5:
-		WelcomeScreen();
+		WelcomeScreen_forAdmin();
 		break;
 	default:
+		system("cls");
 		cout << " - - - - - - - - - - - - - - - " << endl;
 		cout << "Please entered valid number." << endl;
 		cout << " - - - - - - - - - - - - - - - " << endl;
-		WelcomeScreen();
+		WelcomeScreen_forAdmin();
 	}
 }

@@ -1,48 +1,60 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <array>
+#include <ObjectArray.h>
 
 using namespace std;
 
+
+void printPatientInf();
+void PrintPatientRoom();
+void showpatientGender();
+void showPatientDisease();
+void showpatientprecedence();
+void AddPatient();
+void patientRoomController();
+void patientIdController(int x);
+void emergencyorder();
+void patientpriority();
+void ShowDoctorSalary();
+void AllRoomNum();
+void PrintDoctorRoom();
+void printDoctorInf();
+void ShowDoctorGender();
+void AddDoctor();
+void DoctorIdController(int x);
+void doctorRoomController();
+void doctorgendercontroller();
+void printNurseInf();
+void PrintNurserRoom();
+void AllRoomNum();
+void ShowNurseSalary();
+void ShowNurseGender();
+void AddNurse();
+void NurseIdController(int x);
+void NurseRoomController();
+void NurseGenderController();
+int main();
+void welcomescreen_General();
 void WelcomeScreen_forAdmin();
 void Adminmanagement_panel();
 void WelcomeScreen_forpatient();
-void welcomescreen_General();
-
-void PatientProcces_forPatient();
 void PatientProcces_forAdmin();
-void AddPatient();
-void printPatientInf();
-void showPatientDisease();
-void PrintPatientRoom();
-void showpatientGender();
-void patientRoomController();
-void patientIdController(int x);
-void showpatientprecedence();
-
+void PatientProcces_forPatient();
 void Doctorprocces();
-void AddDoctor();
-void printDoctorInf();
-void PrintDoctorRoom();
-void ShowDoctorGender();
-void ShowDoctorSalary();
-void doctorgendercontroller();
-void doctorRoomController();
-void DoctorIdController(int x);
-
 void Nurseprocces();
-void AddNurse();
-void printNurseInf();
-void PrintNurserRoom();
-void ShowNurseSalary();
-void ShowNurseGender();
-void NurseGenderController();
-void NurseRoomController();
-void NurseIdController(int x);
-
 void RoomProcces();
+string Diseasevarieties();
+string orthopedics();
+string ENTdisease();
+string Diabets();
+string Internaldisease();
+string Heartdisease();
+void AnalysiSsample(int analyses);
+void PrintallDisease();
 
-//32
+//45
 
 //------------------Patient Class---------------//
 
@@ -72,7 +84,7 @@ public:
 		else {
 			cout << "Doctor Gender: Female " << endl;
 		}
-		
+
 		if (Pprecedence == 1) {
 			cout << "Patient Precedence : " << "[1 - Green]" << endl;
 		}
@@ -84,7 +96,7 @@ public:
 		}
 		else {
 			cout << "Invalid Precedence !!! " << endl;
-		}	   
+		}
 		cout << "- - - - - - - - - - - " << endl;
 	}
 
@@ -106,9 +118,9 @@ public:
 		}
 	}
 
-	void showpatientprecedence(){
+	void showpatientprecedence() {
 		if (Pprecedence == 1) {
-			cout << "Patient "<< Pname <<  " - Precedence : [1 - Green] " << endl;
+			cout << "Patient " << Pname << " - Precedence : [1 - Green] " << endl;
 		}
 		else if (Pprecedence == 2) {
 			cout << "Patient " << Pname << " - Precedence : [2 - Yellow] " << endl;
@@ -120,12 +132,13 @@ public:
 			cout << "Invalid Precedence !!! " << endl;
 		}
 	}
+
 };
 
 vector<PatientClass> patientList;
 
 
-PatientClass::PatientClass(string Pname, int Page, int Pid, string PDisease, int PRoomnum, char PGender , int Pprecedence) {
+PatientClass::PatientClass(string Pname, int Page, int Pid, string PDisease, int PRoomnum, char PGender, int Pprecedence) {
 	this->Pname = Pname;
 	this->Page = Page;
 	this->Pid = Pid;
@@ -152,13 +165,11 @@ void AddPatient() {
 	cin >> Name;
 	cout << "Age:  ";
 	cin >> Age;
-	cout << endl << "For Doctor [ 1 0 _ _ ]" << endl;
-	cout << "For Nurse [ 2 0 _ _ ]" << endl;
 	cout << "For Patient [ 3 0 _ _ ]" << endl;
-	cout << endl << "Id: ";
+	cout << "Id: ";
 	cin >> Id;
 	cout << "Disease: ";
-	cin >> Disease;
+	Disease = Diseasevarieties();
 	cout << "Room number: ";
 	cin >> roomnum;
 	cout << "Gender (Male[M] - Female[F]): ";
@@ -219,8 +230,20 @@ void patientIdController(int x)
 	}
 }
 
-// - - - - - - Patient room Controller - - - - - - //
+// - - - - - -  - - - - Patient priority contoller  - - - - -//
 
+void patientpriority() {
+	for (auto x : patientList) {
+		if (x.Page > 50) {
+			cout << "Priority patient name : " << x.Pname << " - Age : " << x.Page << endl;
+		}
+		else {
+			cout << "Not priority patient name : " << x.Pname << " - Age : " << x.Page << endl;
+		}
+	}
+}
+
+// - - - - - - Patient room Controller - - - - - - //
 void patientRoomController() {
 	int room1 = 0, room2 = 0, room3 = 0, room4 = 0, room5 = 0, room6 = 0;
 	for (auto x : patientList) {
@@ -297,6 +320,44 @@ void patientRoomController() {
 		PatientProcces_forAdmin();
 	}
 
+
+
+}
+
+// *- - - - - - -  Emergency order - - - -  -//
+
+void emergencyorder() {
+	for (auto x : patientList) {
+
+		if (x.Pprecedence == 3 && x.Page > 50) {
+			cout << x.Pname << " - Very High Priority Patient " << endl;
+			cout << "Priority Reason : " << endl << x.Pprecedence << " - " << x.Page << endl;
+		}
+		else if (x.Pprecedence == 2 && x.Page > 50) {
+			cout << x.Pname << " - High Priority Patient " << endl;
+			cout << "Priority Reason : " << endl << x.Pprecedence << " - " << x.Page << endl;
+		}
+		else if (x.Pprecedence == 1 && x.Page > 50) {
+			cout << x.Pname << " - Medium Priority Patient " << endl;
+			cout << "Priority Reason : " << endl << x.Pprecedence << " - " << x.Page << endl;
+		}
+		else if (x.Pprecedence == 3 && x.Page < 50) {
+			cout << x.Pname << " - High Priority Patient " << endl;
+			cout << "Priority Reason : " << endl << x.Pprecedence << " - " << x.Page << endl;
+		}
+		else if (x.Pprecedence == 2 && x.Page < 50) {
+			cout << x.Pname << " - Medium Priority Patient " << endl;
+			cout << "Priority Reason : " << endl << x.Pprecedence << " - " << x.Page << endl;
+		}
+		else if (x.Pprecedence == 1 && x.Page < 50) {
+			cout << x.Pname << " - Low Priority Patient " << endl;
+			cout << "Priority Reason : " << endl << x.Pprecedence << " - " << x.Page << endl;
+		}
+		else {
+			cout << "Priority Not Found" << endl;
+		}
+
+	}
 
 
 }
@@ -383,14 +444,13 @@ void AddDoctor() {
 	int Docroomnum;
 	char DocGender;
 
+
 	cout << "Name: ";
 	cin >> DocName;
 	cout << "Age:  ";
 	cin >> DocAge;
 	cout << endl << "For Doctor [ 1 0 _ _ ]" << endl;
-	cout << "For Nurse [ 2 0 _ _ ]" << endl;
-	cout << "For Patient [ 3 0 _ _ ]" << endl;
-	cout << endl << "Id: ";
+	cout << "Id: ";
 	cin >> DocId;
 	cout << "Salary: ";
 	cin >> DocSalary;
@@ -622,10 +682,8 @@ void AddNurse() {
 	cin >> NurName;
 	cout << "Age:  ";
 	cin >> NurAge;
-	cout << endl << "For Doctor [ 1 0 _ _ ]" << endl;
 	cout << "For Nurse [ 2 0 _ _ ]" << endl;
-	cout << "For Patient [ 3 0 _ _ ]" << endl;
-	cout << endl << "Id: ";
+	cout << "Id: ";
 	cin >> NurId;
 	cout << "Salary: ";
 	cin >> NurSalary;
@@ -810,8 +868,8 @@ int main() {
 	NurseClass nurse1("Emir", 26, 2020, 12000, 1, 'M');
 	NurseClass nurse2("Nur", 20, 2021, 10000, 2, 'F');
 
-	PatientClass patient1("ahmet", 45, 3020, "Heart", 1, 'M',2);
-	PatientClass patient2("omer", 54, 3021, "respiratory", 2, 'F',1);
+	PatientClass patient1("Ahmet", 45, 3020, "Broken Leg", 1, 'M', 2);
+	PatientClass patient2("Ferhat", 54, 3021, "Type 2 Diabetes", 2, 'F', 1);
 
 	welcomescreen_General();
 
@@ -824,7 +882,7 @@ void welcomescreen_General() {
 	int procces1;
 	cout << "    - - - - - - - - - - - - - - - - - -   " << endl;
 	cout << "	Welcome the Hospital Sistem	" << endl;
-	cout << endl << " SELECT: " << endl << "1. Admin login System " << endl << "2. Patient Record system" << endl;
+	cout << endl << " SELECT: " << endl << "1. Admin login System " << endl << "2. Patient Record system" << endl << "3. Exit " << endl;
 	cin >> procces1;
 	switch (procces1)
 	{
@@ -833,6 +891,10 @@ void welcomescreen_General() {
 		break;
 	case 2:
 		WelcomeScreen_forpatient();
+		break;
+	case 3:
+		system("cls");
+		cout << "The System is Shutting Down." << endl;
 		break;
 	default:
 		cout << " - - - - - - - - - - - - - - - " << endl;
@@ -849,7 +911,7 @@ void welcomescreen_General() {
 void WelcomeScreen_forpatient() {
 	system("cls");
 	int Selectedproc;
-	cout << "SELECT: " << endl << "1. Show Patient Procces " << endl << "2. Show Patient Room Procces" << endl << "3. Exit" << endl;
+	cout << "SELECT: " << endl << "1. Show Patient Procces " << endl << "2. Show Patient Room Procces" << endl << "3. Show Disease Varieties" << endl << "4. Exit" << endl;
 	cin >> Selectedproc;
 	switch (Selectedproc)
 	{
@@ -877,6 +939,9 @@ void WelcomeScreen_forpatient() {
 		}
 		break;
 	case 3:
+		PrintallDisease();
+		break;
+	case 4:
 		system("cls");
 		cout << "The System is Shutting Down." << endl;
 		break;
@@ -928,7 +993,7 @@ void Adminmanagement_panel() {
 
 void WelcomeScreen_forAdmin() {
 	int SelectProcces;
-	cout << "SELECT: " << endl << "1. Show Patient Procces " << endl << "2. Show Doctor Procces" << endl << "3. Show Nurse Procces" << endl << "4. Show Room Procces" << endl << "5. Exit" << endl;
+	cout << "SELECT: " << endl << "1. Show Patient Procces " << endl << "2. Show Doctor Procces" << endl << "3. Show Nurse Procces" << endl << "4. Show Room Procces" << endl << "5. Show Disease Varieties " << endl << "6. Exit" << endl;
 	cin >> SelectProcces;
 
 	switch (SelectProcces) {
@@ -946,6 +1011,9 @@ void WelcomeScreen_forAdmin() {
 
 		break;
 	case 5:
+		PrintallDisease();
+		break;
+	case 6:
 		system("cls");
 		cout << "The System is Shutting Down." << endl;
 		break;
@@ -963,7 +1031,7 @@ void PatientProcces_forAdmin() {
 	//system("cls");
 	int patpros;
 	int PatientProccess;
-	cout << "- - - Patient Procces - - -" << endl << "1. Add Patient " << endl << "2. Delete Patient " << endl << "3. List All Patient" << endl << "4. Show Patiant Disease " << endl <<  "5. Show Patient Gender "  << endl <<"6. Show Patient Precedence"  << endl << "7. Return the Previus Screen" << endl;
+	cout << "- - - Patient Procces - - -" << endl << "1. Add Patient " << endl << "2. Delete Patient " << endl << "3. List All Patient" << endl << "4. Show Patiant Disease " << endl << "5. Show Patient Gender " << endl << "6. Show Patient Precedence" << endl << "7. Show Priority of Patient Age  " << endl << "8. Show Emergeny Order " << endl << "9. Return the Previus Screen" << endl;
 	cin >> PatientProccess;
 
 	switch (PatientProccess)
@@ -1090,8 +1158,35 @@ void PatientProcces_forAdmin() {
 		}
 		break;
 	case 7:
+		patientpriority();
 
-		WelcomeScreen_forAdmin();
+		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> patpros;
+
+		if (patpros == 1) {
+			PatientProcces_forAdmin();
+		}
+		else {
+			WelcomeScreen_forAdmin();
+		}
+
+		break;
+	case 8:
+		emergencyorder();
+		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> patpros;
+
+		if (patpros == 1) {
+			PatientProcces_forAdmin();
+		}
+		else {
+			WelcomeScreen_forAdmin();
+		}
+
+		break;
+	case 9:
+		patientpriority();
+		//WelcomeScreen_forAdmin();
 
 		break;
 	default:
@@ -1107,7 +1202,7 @@ void PatientProcces_forAdmin() {
 void PatientProcces_forPatient() {
 	int patientproc;
 	int PatientProccess;
-	cout << "- - - Patient Procces - - -" << endl << "1. List All Patient" << endl << "2. Show Patiant Disease " << endl << "3. Show Patient Gender "<< endl << "4. Show Patient Precedence" << endl << "5. Return the Previus Screen" << endl;
+	cout << "- - - Patient Procces - - -" << endl << "1. List All Patient" << endl << "2. Show Patiant Disease " << endl << "3. Show Patient Gender " << endl << "4. Show Patient Precedence" << endl << "5. show Priority of patient  " << endl << " 6. Return the Previus Screen" << endl;
 	cin >> PatientProccess;
 
 	switch (PatientProccess)
@@ -1174,13 +1269,27 @@ void PatientProcces_forPatient() {
 		cin >> patientproc;
 
 		if (patientproc == 1) {
-			PatientProcces_forAdmin();
+			PatientProcces_forPatient();
 		}
 		else {
-			WelcomeScreen_forAdmin();
+			WelcomeScreen_forpatient();
 		}
 		break;
 	case 5:
+		patientpriority();
+
+		cout << " \nReturn the Patient Procces Press ( 1 ) " << endl << "Return the Main Screen Press Any Key " << endl;
+		cin >> patientproc;
+
+		if (patientproc == 1) {
+			PatientProcces_forPatient();
+		}
+		else {
+			WelcomeScreen_forpatient();
+		}
+
+		break;
+	case 6:
 
 		WelcomeScreen_forpatient();
 
@@ -1541,5 +1650,243 @@ void RoomProcces() {
 		cout << "Please entered valid number." << endl;
 		cout << " - - - - - - - - - - - - - - - " << endl;
 		WelcomeScreen_forAdmin();
+	}
+}
+
+//  - - - - - - - disease varieties - - -- - -//
+
+string Diseasevarieties() {
+	// 1- broken 
+	// 2- influenza varieties
+	// 3-diabetes 
+	// 4-internal diseases (kidney stone,stomach spasm,)
+	// 5-heart diseases
+	string pat_diseases;
+
+	int ChooseDisease;
+	cout << "Choosie disease varieties : " << endl << "1. Orthopedics " << endl << "2. ENT Diseases" << endl << "3. Diabets " << endl << "4. Internat Disease" << endl << "5. Heart Disease " << endl;
+	cin >> ChooseDisease;
+	switch (ChooseDisease)
+	{
+	case 1:
+		pat_diseases = orthopedics();
+		AnalysiSsample(3);
+		break;
+	case 2:
+		pat_diseases = ENTdisease();
+		AnalysiSsample(2);
+		break;
+	case 3:
+		pat_diseases = Diabets();
+		AnalysiSsample(1);
+		break;
+	case 4:
+		pat_diseases = Internaldisease();
+		AnalysiSsample(2);
+		break;
+	case 5:
+		pat_diseases = Heartdisease();
+		AnalysiSsample(4);
+		break;
+	default:
+
+		break;
+	}
+	return pat_diseases;
+}
+
+string orthopedics() {
+	// broken arm and broken leg
+	string pat_diseases;
+	int orthopedicschoose;
+	cout << "Choosie orthopedics varieties : " << endl << "1. Broken Arm" << endl << "2. Broken Leg" << endl << "3. Broken Wrist" << endl;
+	cin >> orthopedicschoose;
+
+	switch (orthopedicschoose)
+	{
+	case 1: {
+		pat_diseases = "Broken Arm";
+		cout << "Your disease type has been added." << endl;
+		break;
+	}
+	case 2:
+		pat_diseases = "Broken Leg";
+		cout << "Your disease type has been added." << endl;
+		break;
+	case 3:
+		pat_diseases = "Broken Wrist";
+		cout << "Your disease type has been added." << endl;
+		break;
+	default:
+
+		break;
+	}
+
+	return pat_diseases;
+}
+
+string ENTdisease() {
+	//influenza corona pneumonia(zatüre)
+	string pat_diseases;
+	int ENTdiseasechoose;
+	cout << "Choosie ENT Disease varieties : " << endl << "1. Influenza" << endl << "2. Covid-19" << endl << "3. Pneumonia " << endl;
+	cin >> ENTdiseasechoose;
+
+	switch (ENTdiseasechoose)
+	{
+	case 1:
+		pat_diseases = "Influenza";
+		cout << "Your disease type has been added." << endl;
+		break;
+	case 2:
+		pat_diseases = "Covid-19";
+		cout << "Your disease type has been added." << endl;
+		break;
+	case 3:
+		pat_diseases = "Broken Arm";
+		cout << "Your disease type has been added." << endl;
+		break;
+	default:
+		pat_diseases = "Pneumonia (Zatürre)";
+		cout << "Your disease type has been added." << endl;
+		break;
+	}
+	return pat_diseases;
+}
+
+string Diabets() {
+	//Type 1 Diabetes
+	//Type 2 Diabetes
+	string pat_diseases;
+	int Diabetschoose;
+	cout << "Choosie Diabets varieties : " << endl << "1. Type 1 Diabetes " << endl << "2. Type 2 Diabetes" << endl;
+	cin >> Diabetschoose;
+
+	switch (Diabetschoose)
+	{
+	case 1:
+		pat_diseases = "Type 1 Diabetes";
+		cout << "Your disease type has been added." << endl;
+		break;
+	case 2:
+		pat_diseases = "Type 2 Diabetes";
+		cout << "Your disease type has been added." << endl;
+		break;
+	default:
+
+		break;
+	}
+	return pat_diseases;
+}
+
+string Internaldisease() {
+	// kidney stone - stomach spasm
+	string pat_diseases;
+	int Internaldisease_choose;
+	cout << "Choosie Internal disease varieties : " << endl << "1. Kidney Stone " << endl << "2. Stomach Spasm" << endl;
+	cin >> Internaldisease_choose;
+
+	switch (Internaldisease_choose)
+	{
+	case 1:
+		pat_diseases = "Kidney Stone";
+		cout << "Your disease type has been added." << endl;
+		break;
+	case 2:
+		pat_diseases = "Stomach Spasm";
+		cout << "Your disease type has been added." << endl;
+		break;
+	default:
+
+		break;
+	}
+	return pat_diseases;
+}
+
+string Heartdisease() {
+	string pat_diseases;
+	int Heartchoose;
+	cout << "Choosie Heart varieties : " << endl << "1. Heart Failure " << endl << "2. Heart Spasm" << endl;
+	cin >> Heartchoose;
+
+	switch (Heartchoose)
+	{
+	case 1:
+		pat_diseases = " Heart Failure";
+		cout << "Your disease type has been added." << endl;
+		break;
+	case 2:
+		pat_diseases = "Heart Spasm";
+		cout << "Your disease type has been added." << endl;
+		break;
+	default:
+
+		break;
+	}
+	return pat_diseases;
+}
+
+void PrintallDisease() {
+	system("cls");
+	int procc;
+	cout << " Disease varieties: " << endl << "- - - - - - - - - - - - -" << endl;
+	cout << "Orthopedics; " << endl << "- Broken Arm " << endl << "- Broken Leg" << endl << "- Broken Wrist" << endl;
+	cout << "- - - - - - - - - - - - -" << endl;
+	cout << "ENT Diseases; " << endl << "- Influenza" << endl << "- Covid-19" << endl << "- Pneumonia " << endl;
+	cout << "- - - - - - - - - - - - -" << endl;
+	cout << "Diabets; " << endl << "- Type 1 Diabetes " << endl << "- Type 2 Diabetes" << endl;
+	cout << "- - - - - - - - - - - - -" << endl;
+	cout << "Internat Disease; " << endl << "- Kidney Stone " << endl << "- Stomach Spasm" << endl;
+	cout << "- - - - - - - - - - - - -" << endl;
+	cout << "Heart Disease" << endl << "- Heart Failure " << endl << "- Heart Spasm" << endl;
+	cout << "- - - - - - - - - - - - -" << endl;
+
+	cout << " Return the Main Screen Press Any Key  " << endl << " For Exit the System Press Any Key " << endl;
+	cin >> procc;
+
+	if (procc == 1) {
+		welcomescreen_General();
+	}
+	else {
+
+		system("cls");
+		cout << "The System is Shutting Down." << endl;
+
+	}
+}
+
+// - - - - analyzes  sample  - - - - //
+
+void AnalysiSsample(int analyses) {
+
+	// uranalysis
+	// Bloodanalysis
+	// x-ray
+	// cardiography
+
+	if (analyses == 1) {
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "You need to give a blood test." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+	}
+	else if (analyses == 2) {
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "You need to give a urinalysis." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+	}
+	else if (analyses == 3) {
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "You need to have an x-ray taken." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+	}
+	else if (analyses == 4) {
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "You need to have a cardiogram taken." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
+	}
+	else {
+		cout << " - - - - - - - - - - - - - - - " << endl;
+		cout << "Contact your doctor directly." << endl;
+		cout << " - - - - - - - - - - - - - - - " << endl;
 	}
 }
